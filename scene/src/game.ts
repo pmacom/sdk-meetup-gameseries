@@ -3,4 +3,4 @@ import { connect } from './multiplayer/connection'
 
 const pacman = new PacManGame()
 
-connect('MyRoom')
+connect('my_room')

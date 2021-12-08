@@ -19,7 +19,7 @@ connect("my_room").then((room) => {
     })
 
     room.onMessage("start", () => {
-
+      log('User has joined the room!')
     });
 
     room.onLeave((code) => {
