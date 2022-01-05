@@ -15,7 +15,7 @@ export default Arena({
          * Define your room handlers:
          */
         gameServer
-            .define('my_room', PacManGame)
+            .define('pacman', PacManGame)
             .filterBy(['realm']);
 
     },
