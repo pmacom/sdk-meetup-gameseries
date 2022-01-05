@@ -1,7 +1,7 @@
 import { PacmanPixelRatio } from "../constants"
 
 const wallMaterial = new Material()
-wallMaterial.albedoColor = Color3.Purple()
+wallMaterial.albedoColor = new Color4(1,0,0,.5)
 const topMaterial = new Material()
 topMaterial.albedoColor = Color3.Black()
 

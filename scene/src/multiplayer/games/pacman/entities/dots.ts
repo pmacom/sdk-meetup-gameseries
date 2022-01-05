@@ -4,11 +4,10 @@ import { PacManGameState } from "../state"
 
 const scale = .25
 export class PacManGameEntityDot extends Entity {
-  private shape: SphereShape
+  private shape: SphereShape = new SphereShape()
 
   constructor(location: Vector2){
     super()
-    this.shape = new SphereShape()
     this.addComponent(this.shape)
     this.addComponent(new Transform({
       position: new Vector3(

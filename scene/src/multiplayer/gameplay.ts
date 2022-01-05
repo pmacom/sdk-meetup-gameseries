@@ -1,32 +1,58 @@
 import * as utils from '@dcl/ecs-scene-utils';
 import * as ui from '@dcl/ui-scene-utils';
+import { UserTracker } from 'src/systems/UserTracker';
 import { connect } from "./connection";
+import { PacManGameUserPlaceholder, PlayerPlaceholder } from './games/pacman/entities/placeholder';
 
-//
-// Connect to Colyseus server! 
-// Set up the scene after connection has been established.
-//
-connect("my_room").then((room) => {
-    log("Connected!");
+const playerPlaceholders = engine.getComponentGroup(PlayerPlaceholder)
 
-    // when a player leaves, remove it from the leaderboard.
-    room.state.players.onRemove = () => {
-       
-    }
+export const GameStart = () => {
+  connect("pacman").then((room) => {
+      log("Connected!", room);
 
-    room.state.listen("countdown", (num: number) => {
-       
-    })
+      UserTracker.enable(() => {
+        const { x, y, z } = Camera.instance.feetPosition
+        room.send('location', { positionX: x, positionY: y, positionZ: z })
 
-    room.onMessage("start", () => {
-      log('User has joined the room!')
-    });
+        // if(playerPlaceholders.entities.length){
+        //   playerPlaceholders.entities
+        // }
+        // log(room.state.players)
+      })
 
-    room.onLeave((code) => {
-        log("onLeave, code =>", code);
-    });
+      // when a player leaves, remove it from the leaderboard.
+      room.state.players.onRemove = (player: any) => {
+        playerPlaceholders.entities.forEach(playerPlaceholder => {
+          const t = playerPlaceholder
+          debugger
+        })
+      }
 
-}).catch((err) => {
-    error(err);
+      room.state.players.onAdd = (player: any ) => {
+        const { name, role } = player
+        const playerEntity = new PacManGameUserPlaceholder(player.name)
+      }
+      
 
-});
+      room.state.listen("countdown", (num: number) => {
+        
+      })
+
+      room.onMessage("welcome", (data) => {
+        log('We got a message', data)
+        log('Room state', room.state)
+      })
+
+      room.onMessage("start", () => {
+        log('User has joined the room!')
+      });
+
+      room.onLeave((code) => {
+          log("onLeave, code =>", code);
+      });
+
+  }).catch((err) => {
+      error(err);
+
+  });
+}

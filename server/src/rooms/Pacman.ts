@@ -7,9 +7,7 @@ const ROUND_DURATION = 60 * 3;
 // const MAX_BLOCK_HEIGHT = 5;
 const MAX_BLOCK_HEIGHT = 19;
 
-export class MyRoom extends Room<PacmanState> {
-  private currentHeight: number = 0;
-  private isFinished: boolean = false;
+export class Pacman extends Room<PacmanState> {
 
   onCreate (options: any) {
     this.setState(new PacmanState());
@@ -17,8 +15,7 @@ export class MyRoom extends Room<PacmanState> {
     // set-up the game!
     this.setUp();
 
-    this.onMessage("message", (client: Client, atPosition: any) => {
-      
+    this.onMessage("message", (client: Client, position: any) => {
     });
   }
 
@@ -32,7 +29,17 @@ export class MyRoom extends Room<PacmanState> {
     });
     this.state.players.set(client.sessionId, newPlayer);
 
-    console.log(newPlayer.name, "joined! => ", options.userData);
+    this.broadcast('welcome', "THIS IS A MESSAGE!")
+
+    this.onMessage('location', (client: Client, position: any) => {
+      const { positionX, positionY, positionZ } = position
+      const player = this.state.players.get(client.sessionId);
+      player.positionX = positionX
+      player.positionY = positionY
+      player.positionZ = positionZ
+    })
+
+    // console.log(newPlayer.name, "joined! => ", options.userData);
   }
 
   onLeave (client: Client, consented: boolean) {

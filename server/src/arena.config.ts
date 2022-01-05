@@ -4,18 +4,18 @@ import { monitor } from "@colyseus/monitor";
 /**
  * Import your Room files
  */
-import { MyRoom } from "./rooms/MyRoom";
+import { Pacman } from "./rooms/Pacman";
 
 export default Arena({
-    getId: () => "Your Colyseus App",
+    getId: () => "Pacman game",
 
     initializeGameServer: (gameServer) => {
         /**
          * Define your room handlers:
          */
         gameServer
-            .define('my_room', MyRoom)
-            .filterBy(['realm']);
+          .define('pacman', Pacman)
+          .filterBy(['realm']);
 
     },
 
