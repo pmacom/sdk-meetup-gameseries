@@ -7,7 +7,10 @@ const ROUND_DURATION = 60 * 3;
 // const MAX_BLOCK_HEIGHT = 5;
 const MAX_BLOCK_HEIGHT = 19;
 
-export class Pacman extends Room<PacmanState> {
+
+export class PacManGame extends Room<PacmanState> {
+  private currentHeight: number = 0;
+  private isFinished: boolean = false;
 
   onCreate (options: any) {
     this.setState(new PacmanState());
