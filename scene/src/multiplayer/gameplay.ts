@@ -24,19 +24,26 @@ export const GameStart = () => {
       room.state.players.onRemove = (player: any) => {
         playerPlaceholders.entities.forEach(playerPlaceholder => {
           const t = playerPlaceholder
-          debugger
+          log('Player has left', player.name)
         })
       }
 
       room.state.players.onAdd = (player: any ) => {
         const { name, role } = player
         const playerEntity = new PacManGameUserPlaceholder(player.name)
+        log('Player has entered', name)
       }
-      
 
-      room.state.listen("countdown", (num: number) => {
-        
+      room.onMessage("updatePlayerLocation", (data) => {
+        const {
+          playerId,
+          positionX,
+          positionY,
+          positionZ,
+        } = data
+        log('User location has changed', playerId, positionX, positionY, positionZ)
       })
+      
 
       room.onMessage("welcome", (data) => {
         log('We got a message', data)
@@ -48,7 +55,7 @@ export const GameStart = () => {
       });
 
       room.onLeave((code) => {
-          log("onLeave, code =>", code);
+        log("onLeave, code =>", code);
       });
 
   }).catch((err) => {

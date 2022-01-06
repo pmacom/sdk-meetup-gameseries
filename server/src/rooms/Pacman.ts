@@ -40,6 +40,12 @@ export class PacManGame extends Room<PacmanState> {
       player.positionX = positionX
       player.positionY = positionY
       player.positionZ = positionZ
+      client.send('updatePlayerLocation',{
+        playerId: client.sessionId,
+        positionX,
+        positionY, 
+        positionZ
+      })
     })
 
     // console.log(newPlayer.name, "joined! => ", options.userData);
