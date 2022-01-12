@@ -48,6 +48,8 @@ export class PacManGame extends Room<PacmanState> {
       })
     })
 
+    
+
     // console.log(newPlayer.name, "joined! => ", options.userData);
   }
 
