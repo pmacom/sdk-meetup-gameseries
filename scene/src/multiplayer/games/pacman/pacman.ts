@@ -6,6 +6,7 @@ import { PacmanLevelData, PacmanTilePosition } from './interfaces'
 
 import level0 from './levels/level0'
 import level1 from './levels/level1'
+import { getUserData } from '@decentraland/Identity'
 
 export class PacManGame extends Entity {
   public controller: PacmanGameStateController = PacManGameState

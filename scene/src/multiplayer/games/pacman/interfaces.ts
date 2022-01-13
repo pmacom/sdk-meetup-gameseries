@@ -17,3 +17,16 @@ export interface PacmanPlayerData {
   positionY: number,
   positionZ: number,
 }
+
+export interface UserTransform {
+  positionX: number,
+  positionY: number,
+  positionZ: number,
+  rotationX: number,
+  rotationY: number,
+  rotationZ: number,
+}
+
+export interface PacmanGameState {
+  players: PacmanPlayerData[]
+}

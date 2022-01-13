@@ -8,10 +8,6 @@ const ROUND_DURATION = 60 * 3;
 // const MAX_BLOCK_HEIGHT = 5;
 const MAX_BLOCK_HEIGHT = 19;
 
-import { getUserData } from "@decentraland/Identity"
-
-
-
 export class PacManGame extends Room<PacmanState> {
   private currentHeight: number = 0;
   private isFinished: boolean = false;
@@ -36,12 +32,17 @@ export class PacManGame extends Room<PacmanState> {
     });
     this.state.players.set(client.sessionId, newPlayer);
 
-    this.onMessage('location', (client: Client, position: any) => {
-      const { positionX, positionY, positionZ } = position
+    this.onMessage('location', (client: Client, transform: any) => {
+      const { positionX, positionY, positionZ, rotationX, rotationY, rotationZ } = transform
       const player = this.state.players.get(client.sessionId);
       player.positionX = positionX
       player.positionY = positionY
       player.positionZ = positionZ
+      player.rotationX = rotationX
+      player.rotationY = rotationY
+      player.rotationZ = rotationZ
+
+      
       // client.send('updatePlayerLocation',{
       //   playerId: client.sessionId,
       //   positionX,

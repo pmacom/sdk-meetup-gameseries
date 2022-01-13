@@ -1,17 +1,9 @@
-import { PlayerPlaceholder } from "src/multiplayer/games/pacman/entities/placeholder"
-
-interface UserLocation {
-  positionX: number,
-  positionY: number,
-  positionZ: number,
-}
-
-const playerPlaceholders = engine.getComponentGroup(PlayerPlaceholder)
+import { UserTransform } from "src/multiplayer/games/pacman/interfaces"
 
 class _UserTracker implements ISystem {
     private system: ISystem
     private isTracking: boolean = false
-    public location: UserLocation | undefined
+    public location: UserTransform | undefined
     public getPlayerLocation: Function | undefined
 
     constructor(){
@@ -36,6 +28,10 @@ class _UserTracker implements ISystem {
       // if(playerPlaceholders.size){
       //   playerPlaceholders.forEach(() => {})
       // }
+    }
+
+    updatePlayerLocation(name: string, position: Vector3) {
+      
     }
 }
 

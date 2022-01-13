@@ -6,6 +6,9 @@ export class Player extends Schema {
   @type("number") positionX: number;
   @type("number") positionY: number;
   @type("number") positionZ: number;
+  @type("number") rotationX: number;
+  @type("number") rotationY: number;
+  @type("number") rotationZ: number;
 }
 
 export class PacmanState extends Schema {
