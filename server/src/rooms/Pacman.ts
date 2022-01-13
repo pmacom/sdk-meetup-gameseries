@@ -1,11 +1,15 @@
 import { Room, Client } from "colyseus";
 import { PacmanState, Player } from "./PacmanState";
 
+
 const ROUND_DURATION = 60 * 3;
 // const ROUND_DURATION = 30;
 
 // const MAX_BLOCK_HEIGHT = 5;
 const MAX_BLOCK_HEIGHT = 19;
+
+import { getUserData } from "@decentraland/Identity"
+
 
 
 export class PacManGame extends Room<PacmanState> {
@@ -32,20 +36,18 @@ export class PacManGame extends Room<PacmanState> {
     });
     this.state.players.set(client.sessionId, newPlayer);
 
-    this.broadcast('welcome', "THIS IS A MESSAGE!")
-
     this.onMessage('location', (client: Client, position: any) => {
       const { positionX, positionY, positionZ } = position
       const player = this.state.players.get(client.sessionId);
       player.positionX = positionX
       player.positionY = positionY
       player.positionZ = positionZ
-      client.send('updatePlayerLocation',{
-        playerId: client.sessionId,
-        positionX,
-        positionY, 
-        positionZ
-      })
+      // client.send('updatePlayerLocation',{
+      //   playerId: client.sessionId,
+      //   positionX,
+      //   positionY, 
+      //   positionZ
+      // })
     })
 
     

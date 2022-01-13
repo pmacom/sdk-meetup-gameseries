@@ -6,6 +6,10 @@ import { PacManGameUserPlaceholder, PlayerPlaceholder } from './games/pacman/ent
 
 const playerPlaceholders = engine.getComponentGroup(PlayerPlaceholder)
 
+declare const Map: any
+
+const playerMap = new Map()
+
 export const GameStart = () => {
   connect("pacman").then((room) => {
       log("Connected!", room);
@@ -13,15 +17,12 @@ export const GameStart = () => {
       UserTracker.enable(() => {
         const { x, y, z } = Camera.instance.feetPosition
         room.send('location', { positionX: x, positionY: y, positionZ: z })
-
-        // if(playerPlaceholders.entities.length){
-        //   playerPlaceholders.entities
-        // }
-        // log(room.state.players)
+        log('room', room)
       })
 
       // when a player leaves, remove it from the leaderboard.
       room.state.players.onRemove = (player: any) => {
+        // debugger
         playerPlaceholders.entities.forEach(playerPlaceholder => {
           const t = playerPlaceholder
           log('Player has left', player.name)
@@ -29,9 +30,18 @@ export const GameStart = () => {
       }
 
       room.state.players.onAdd = (player: any ) => {
-        const { name, role } = player
-        const playerEntity = new PacManGameUserPlaceholder(player.name)
+        const { name, role, positionX, positionY, positionZ }: PacmanPlayerData = player
+        playerMap.set(player.name, new PacManGameUserPlaceholder(player))
+
+        // player.listen('positionX', (positionX: number[]) => {
+        //   // update pos
+        // })
+
         log('Player has entered', name)
+      }
+
+      room.state.players.onChange = (player: any ) => {
+        log('this is firing')
       }
 
       room.onMessage("updatePlayerLocation", (data) => {

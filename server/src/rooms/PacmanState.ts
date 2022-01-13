@@ -7,6 +7,7 @@ export class Player extends Schema {
   @type("number") positionY: number;
   @type("number") positionZ: number;
 }
+
 export class PacmanState extends Schema {
   @type({ map: Player }) players = new MapSchema<Player>();
 }

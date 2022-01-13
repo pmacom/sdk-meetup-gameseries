@@ -33,6 +33,9 @@ class _UserTracker implements ISystem {
       if(this.getPlayerLocation){
         this.getPlayerLocation()
       }
+      // if(playerPlaceholders.size){
+      //   playerPlaceholders.forEach(() => {})
+      // }
     }
 }
 
