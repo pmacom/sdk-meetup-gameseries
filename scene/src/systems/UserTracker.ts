@@ -3,16 +3,15 @@ import { UserTransform } from "src/multiplayer/games/pacman/interfaces"
 class _UserTracker implements ISystem {
     private system: ISystem
     private isTracking: boolean = false
-    public location: UserTransform | undefined
-    public getPlayerLocation: Function | undefined
+    public sendPlayerLocation: Function | undefined
 
     constructor(){
       this.system = this
     }
 
-    enable(getPlayerLocation: Function){
+    enable(sendPlayerLocation: Function){
       this.isTracking = true
-      this.getPlayerLocation = getPlayerLocation
+      this.sendPlayerLocation = sendPlayerLocation
       if(!this.system.active){
           engine.addSystem(this.system)
       }
@@ -22,16 +21,9 @@ class _UserTracker implements ISystem {
       if(!this.isTracking){
         engine.removeSystem(this)
       }
-      if(this.getPlayerLocation){
-        this.getPlayerLocation()
+      if(this.sendPlayerLocation){
+        this.sendPlayerLocation()
       }
-      // if(playerPlaceholders.size){
-      //   playerPlaceholders.forEach(() => {})
-      // }
-    }
-
-    updatePlayerLocation(name: string, position: Vector3) {
-      
     }
 }
 

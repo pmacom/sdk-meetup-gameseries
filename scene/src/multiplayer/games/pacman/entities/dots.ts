@@ -1,10 +1,12 @@
 import { PacmanPixelRatio } from "../constants"
 import * as utils from '@dcl/ecs-scene-utils'
 import { PacManGameState } from "../state"
+import { SOUND_PACMAN_CHOMP } from "../sounds"
 
 const scale = .25
 export class PacManGameEntityDot extends Entity {
   private shape: SphereShape = new SphereShape()
+  private sound: AudioSource = new AudioSource(SOUND_PACMAN_CHOMP)
 
   constructor(location: Vector2){
     super()
@@ -27,11 +29,11 @@ export class PacManGameEntityDot extends Entity {
       new utils.TriggerComponent(
         triggerBox,
         {
-        onCameraEnter :
-          () => {
-            log('GOBBLE')
-            engine.removeEntity(this)
-            PacManGameState.subtractDot()
+        onCameraEnter : () => {
+          log('GOBBLE')
+          // this.sound.playOnce()
+          this.sound.playing = true
+          engine.removeEntity(this)
         },
         // enableDebug: true
       }

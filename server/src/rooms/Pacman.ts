@@ -1,6 +1,6 @@
 import { Room, Client } from "colyseus";
-import { PacmanState, Player } from "./PacmanState";
-
+import { Level, PacmanState, Pellet, Player, Wall } from "./PacmanState";
+import level from './levels'
 
 const ROUND_DURATION = 60 * 3;
 // const ROUND_DURATION = 30;
@@ -23,7 +23,15 @@ export class PacManGame extends Room<PacmanState> {
   }
 
   setUp() {
-    // Set up the game
+    // console.log(level)
+    const { walls, floor, pellets, powerPellets } = level
+
+    this.state.level = new Level({
+      walls: walls.forEach(wall => new Wall(wall)),
+      floor: floor.forEach(f => new Wall(f)),
+      pellets: pellets.forEach(p => new Pellet(p)),
+      powerPellets: powerPellets.forEach(pp => new Pellet(pp))
+    })
   }
 
   onJoin (client: Client, options: any) {
@@ -31,6 +39,8 @@ export class PacManGame extends Room<PacmanState> {
       name: options.userData.displayName || "Anonymous",
     });
     this.state.players.set(client.sessionId, newPlayer);
+
+
 
     this.onMessage('location', (client: Client, transform: any) => {
       const { positionX, positionY, positionZ, rotationX, rotationY, rotationZ } = transform

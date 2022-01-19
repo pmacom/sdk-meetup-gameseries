@@ -5,13 +5,14 @@ import { connect } from "./connection";
 import { PacManGameUserPlaceholder } from './games/pacman/entities/placeholder';
 import { PacmanPlayerData } from './games/pacman/interfaces';
 import { PacManGameState } from './games/pacman/state';
+import { getUserData } from '@decentraland/Identity'
 
 export const GameStart = () => {
   connect("pacman").then((room) => {
       log("Connected!", room);
 
       UserTracker.enable(() => {
-        const { x, y, z } = Camera.instance.feetPosition
+        const { x, y, z } = Camera.instance.position
         const { x: xr, y: yr, z: zr } = Camera.instance.rotation.eulerAngles
         room.send('location', {
           positionX: x,
@@ -21,7 +22,6 @@ export const GameStart = () => {
           rotationY: yr,
           rotationZ: zr,
         })
-        // log('room', room.state)
       })
 
       // when a player leaves, remove it from the leaderboard.
@@ -39,8 +39,10 @@ export const GameStart = () => {
         PacManGameState.playerMap.set(player.name, playerEntity)
 
         player.onChange = (changes: any) => {
+          if(player.name == PacManGameState.playerName){ return }
           let transform = playerEntity.getComponent(Transform)
           let rotation = transform.rotation.clone()
+          log(player, changes)
 
           changes.forEach((change: any) => {
             const { field, value } = change
@@ -55,7 +57,7 @@ export const GameStart = () => {
                 transform.position.z = value
                 break;
               case 'rotationX':
-                // rotation.x = value
+                rotation.x = value
                 break;
               case 'rotationY':
                 rotation.y = value
@@ -72,25 +74,17 @@ export const GameStart = () => {
         log('Player has entered', name)
       }
 
+      room.state.level.onAdd = (level: any) => {
+        log('New Level has been added!', level)
+      }
+
+      room.state.level.onChange = (level: any) => {
+        log('New Level has change!', level)
+      }
+
       room.state.players.onChange = (player: any) => {
         log('Players have changed', player)
       }
-
-      room.onMessage("updatePlayerLocation", (data) => {
-        const {
-          playerId,
-          positionX,
-          positionY,
-          positionZ,
-        } = data
-        log('User location has changed', playerId, positionX, positionY, positionZ)
-      })
-      
-
-      room.onMessage("welcome", (data) => {
-        log('We got a message', data)
-        log('Room state', room.state)
-      })
 
       room.onMessage("start", () => {
         log('User has joined the room!')

@@ -1,14 +1,14 @@
 import { PacManGame } from "./multiplayer/games/pacman/pacman";
 import { connect } from './multiplayer/connection'
 
-import { PacmanCharacter } from "./multiplayer/games/pacman/entities/pacman"
+import { PacmanPlayerEntity } from "./multiplayer/games/pacman/entities/player"
 import { GameStart } from "./multiplayer/gameplay";
 
 GameStart()
 
 
 const pacman = new PacManGame()
-const pacmanChar = new PacmanCharacter()
+const pacmanChar = new PacmanPlayerEntity('pacman')
 
 class testBox1 extends Entity {
   public shape: BoxShape = new BoxShape()

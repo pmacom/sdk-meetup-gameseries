@@ -20,27 +20,6 @@ export class PacManGame extends Entity {
       rotation: new Quaternion().setEuler(0, 0, 0)
     }))
     engine.addEntity(this)
-
-    this.loadLevel(level1)
-
-
-  executeTask(async () => {
-    let myPlayer = await getUserData()
-
-      onEnterSceneObservable.add((player) => {
-        log("player entered scene: ", player.userId)
-        if (player.userId === myPlayer?.userId) {
-          log("I entered the scene!")
-        }
-      })
-
-      onLeaveSceneObservable.add((player) => {
-        log("player left scene: ", player.userId)
-        if (player.userId === myPlayer?.userId) {
-          log("I left the scene!")
-        }
-      })
-    })
   }
 
   loadLevel(levelData: PacmanLevelData){
