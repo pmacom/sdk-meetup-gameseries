@@ -22,26 +22,26 @@ export class PacManGame extends Entity {
     engine.addEntity(this)
   }
 
-  loadLevel(levelData: PacmanLevelData){
-    levelData.walls.forEach(this.renderWall)
-    levelData.pellets.forEach(this.renderPellet)
-    levelData.powerPellets.forEach(this.renderPowerPellet)
-    const totalPellets = levelData.pellets.length + levelData.powerPellets.length
-    this.controller.setDotCount(totalPellets)
-  }
+  // loadLevel(levelData: PacmanLevelData){
+  //   levelData.walls.forEach(this.renderWall)
+  //   levelData.pellets.forEach(this.renderPellet)
+  //   levelData.powerPellets.forEach(this.renderPowerPellet)
+  //   const totalPellets = levelData.pellets.length + levelData.powerPellets.length
+  //   this.controller.setDotCount(totalPellets)
+  // }
 
-  renderWall(wall: PacmanTilePosition){
-    const { x, y } = wall
-    new PacManGameEntityWall(new Vector2(x, y))
-  }
+  // renderWall(wall: PacmanTilePosition){
+  //   const { x, y } = wall
+  //   new PacManGameEntityWall(new Vector2(x, y))
+  // }
 
-  renderPellet(pellet: PacmanTilePosition){
-    const { x, y } = pellet
-    new PacManGameEntityDot(new Vector2(x, y))
-  }
+  // renderPellet(pellet: PacmanTilePosition){
+  //   const { x, y } = pellet
+  //   new PacManGameEntityDot(new Vector2(x, y))
+  // }
 
-  renderPowerPellet(powerPellet: PacmanTilePosition){
-    const { x, y } = powerPellet
-    new PacManGameEntitySuperDot(new Vector2(x, y))
-  }
+  // renderPowerPellet(powerPellet: PacmanTilePosition){
+  //   const { x, y } = powerPellet
+  //   new PacManGameEntitySuperDot(new Vector2(x, y))
+  // }
 }

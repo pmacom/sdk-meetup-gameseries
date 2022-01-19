@@ -1,5 +1,6 @@
 import { Room, Client } from "colyseus";
-import { Level, PacmanState, Pellet, Player, Wall } from "./PacmanState";
+import { ArraySchema } from "@colyseus/schema";
+import { Floor, Level, PacmanState, Pellet, Player, Wall } from "./PacmanState";
 import level from './levels'
 
 const ROUND_DURATION = 60 * 3;
@@ -24,23 +25,26 @@ export class PacManGame extends Room<PacmanState> {
 
   setUp() {
     // console.log(level)
-    const { walls, floor, pellets, powerPellets } = level
-
-    this.state.level = new Level({
-      walls: walls.forEach(wall => new Wall(wall)),
-      floor: floor.forEach(f => new Wall(f)),
-      pellets: pellets.forEach(p => new Pellet(p)),
-      powerPellets: powerPellets.forEach(pp => new Pellet(pp))
-    })
+    
   }
 
   onJoin (client: Client, options: any) {
     const newPlayer = new Player().assign({
       name: options.userData.displayName || "Anonymous",
     });
+
     this.state.players.set(client.sessionId, newPlayer);
+    const { walls, floor, pellets, powerPellets } = level
 
+    this.state.walls = new ArraySchema<Wall>()
+    this.state.floor = new ArraySchema<Floor>()
+    this.state.pellets = new ArraySchema<Pellet>()
+    this.state.powerPellets = new ArraySchema<Pellet>()
 
+    walls.forEach(wall => this.state.walls.push(new Wall(wall)))
+    floor.forEach(f => this.state.floor.push(new Floor(f)))
+    pellets.forEach(p => this.state.pellets.push(new Pellet(p)))
+    powerPellets.forEach(pp => this.state.powerPellets.push(new Pellet(pp)))
 
     this.onMessage('location', (client: Client, transform: any) => {
       const { positionX, positionY, positionZ, rotationX, rotationY, rotationZ } = transform

@@ -14,7 +14,7 @@ export class Player extends Schema {
 
 let pelletCounter: number = 0
 export class Pellet extends Schema {
-  @type("string") id: number;
+  @type("number") id: number;
   @type("number") x: number;
   @type("number") y: number;
   @type("boolean") visible: boolean;
@@ -47,5 +47,8 @@ export class Level extends Schema {
 
 export class PacmanState extends Schema {
   @type({ map: Player }) players = new MapSchema<Player>();
-  @type(Level) level = new Level();
+  @type([Pellet]) pellets = new ArraySchema<Pellet>()
+  @type([Pellet]) powerPellets = new ArraySchema<Pellet>()
+  @type([Wall]) walls = new ArraySchema<Wall>()
+  @type([Floor]) floor = new ArraySchema<Floor>()
 }

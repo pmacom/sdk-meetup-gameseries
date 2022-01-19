@@ -6,6 +6,9 @@ import { PacManGameUserPlaceholder } from './games/pacman/entities/placeholder';
 import { PacmanPlayerData } from './games/pacman/interfaces';
 import { PacManGameState } from './games/pacman/state';
 import { getUserData } from '@decentraland/Identity'
+import { PacManGameEntityWall } from './games/pacman/entities/wall';
+import { PacManGameEntityDot } from './games/pacman/entities/dots';
+import { PacManGameEntitySuperDot } from './games/pacman/entities/superdot';
 
 export const GameStart = () => {
   connect("pacman").then((room) => {
@@ -74,12 +77,26 @@ export const GameStart = () => {
         log('Player has entered', name)
       }
 
-      room.state.level.onAdd = (level: any) => {
-        log('New Level has been added!', level)
+      room.state.walls.onAdd = (wall: any) => {
+        const { x, y } = wall
+        new PacManGameEntityWall(new Vector2(x, y))
       }
 
-      room.state.level.onChange = (level: any) => {
-        log('New Level has change!', level)
+      room.state.pellets.onAdd = (p: any) => {
+        const { x, y } = p
+        new PacManGameEntityDot(new Vector2(x, y))
+      }
+
+      room.state.powerPellets.onAdd = (pp: any) => {
+        log('NEW POWER PELLET')
+        const { x, y } = pp
+        new PacManGameEntitySuperDot(new Vector2(x, y))
+      }
+
+
+
+      room.state.walls.onChange = (wall: any) => {
+        log('Wall update', wall)
       }
 
       room.state.players.onChange = (player: any) => {

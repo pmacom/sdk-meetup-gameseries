@@ -33,7 +33,7 @@ export class PacManGameEntityDot extends Entity {
           log('GOBBLE')
           // this.sound.playOnce()
           this.sound.playing = true
-          engine.removeEntity(this)
+          // engine.removeEntity(this)
         },
         // enableDebug: true
       }
