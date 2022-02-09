@@ -10,9 +10,14 @@ import { PacManGameEntityWall } from './games/pacman/entities/wall';
 import { PacManGameEntityDot } from './games/pacman/entities/dots';
 import { PacManGameEntitySuperDot } from './games/pacman/entities/superdot';
 
+export const serverRoomSettings: any = {}
+
 export const GameStart = () => {
   connect("pacman").then((room) => {
       log("Connected!", room);
+
+      serverRoomSettings.room = room
+      serverRoomSettings.eatPellet = (pelletId: number) => room.send('gobble', { pelletId })
 
       UserTracker.enable(() => {
         const { x, y, z } = Camera.instance.position
@@ -84,7 +89,17 @@ export const GameStart = () => {
 
       room.state.pellets.onAdd = (p: any) => {
         const { x, y } = p
-        new PacManGameEntityDot(new Vector2(x, y))
+        log('NEW PELLET CREATED!!!!!!!!!')
+        const pellet = new PacManGameEntityDot(new Vector2(x, y))
+        p.onChange = (changes: any) => {
+          changes.forEach((change: any) => {
+            const { field, value } = change
+            switch(field){
+              case '':
+                break
+            }
+          })
+        }
       }
 
       room.state.powerPellets.onAdd = (pp: any) => {

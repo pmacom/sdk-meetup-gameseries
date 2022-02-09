@@ -23,8 +23,10 @@ export class Pellet extends Schema {
     super()
     this.visible = true
     this.id = pelletCounter++
+    this.x = x
+    this.y = y
 
-    console.log(this)
+    console.log('NEW PELLET ON THE SERVER SIDE!!!', x, y)
   }
 }
 

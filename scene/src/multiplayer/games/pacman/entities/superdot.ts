@@ -7,6 +7,7 @@ export class PacManGameEntitySuperDot extends Entity {
 
   constructor(location: Vector2){
     super()
+    log({ location })
     this.shape = new SphereShape()
     this.addComponent(this.shape)
     this.addComponent(new Transform({

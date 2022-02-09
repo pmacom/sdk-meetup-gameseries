@@ -65,6 +65,9 @@ export class PacManGame extends Room<PacmanState> {
       // })
     })
 
+    this.onMessage('gobble', (client: Client, pelletData: any) => {
+      console.log('GOBBLE', pelletData)
+    })
     
 
     // console.log(newPlayer.name, "joined! => ", options.userData);

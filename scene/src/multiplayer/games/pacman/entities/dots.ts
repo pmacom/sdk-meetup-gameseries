@@ -2,6 +2,8 @@ import { PacmanPixelRatio } from "../constants"
 import * as utils from '@dcl/ecs-scene-utils'
 import { PacManGameState } from "../state"
 import { SOUND_PACMAN_CHOMP } from "../sounds"
+import { Wait } from "./wait"
+import { serverRoomSettings } from "src/multiplayer/gameplay"
 
 const scale = .25
 export class PacManGameEntityDot extends Entity {
@@ -10,6 +12,7 @@ export class PacManGameEntityDot extends Entity {
 
   constructor(location: Vector2){
     super()
+
     this.addComponent(this.shape)
     this.addComponent(new Transform({
       position: new Vector3(
@@ -31,8 +34,13 @@ export class PacManGameEntityDot extends Entity {
         {
         onCameraEnter : () => {
           log('GOBBLE')
+
           // this.sound.playOnce()
-          this.sound.playing = true
+          // this.sound.playing = true
+          if(serverRoomSettings.room){
+            serverRoomSettings.eatPellet(Math.random()*100)
+          }
+
           // engine.removeEntity(this)
         },
         // enableDebug: true
