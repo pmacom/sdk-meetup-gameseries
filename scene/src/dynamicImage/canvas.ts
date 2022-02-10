@@ -1,0 +1,1 @@
+export const GlobalCanvas = new UICanvas()
