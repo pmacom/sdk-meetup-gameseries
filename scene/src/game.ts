@@ -6,7 +6,6 @@ import { GameStart } from "./multiplayer/gameplay";
 
 GameStart()
 
-
 const pacman = new PacManGame()
 const pacmanChar = new PacmanPlayerEntity('pacman')
 

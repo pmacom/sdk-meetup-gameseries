@@ -89,13 +89,15 @@ export const GameStart = () => {
 
       room.state.pellets.onAdd = (p: any) => {
         const { x, y } = p
-        log('NEW PELLET CREATED!!!!!!!!!')
         const pellet = new PacManGameEntityDot(new Vector2(x, y))
         p.onChange = (changes: any) => {
+          log('pellet change')
           changes.forEach((change: any) => {
             const { field, value } = change
+            log({ field, value })
             switch(field){
-              case '':
+              case 'visible':
+                if(!value){ pellet.hide() }
                 break
             }
           })

@@ -6,12 +6,16 @@ import { Wait } from "./wait"
 import { serverRoomSettings } from "src/multiplayer/gameplay"
 
 const scale = .25
+let dotCount = 0
+
 export class PacManGameEntityDot extends Entity {
   private shape: SphereShape = new SphereShape()
   private sound: AudioSource = new AudioSource(SOUND_PACMAN_CHOMP)
+  public id: number
 
   constructor(location: Vector2){
     super()
+    this.id = dotCount++
 
     this.addComponent(this.shape)
     this.addComponent(new Transform({
@@ -38,7 +42,7 @@ export class PacManGameEntityDot extends Entity {
           // this.sound.playOnce()
           // this.sound.playing = true
           if(serverRoomSettings.room){
-            serverRoomSettings.eatPellet(Math.random()*100)
+            serverRoomSettings.eatPellet(this.id)
           }
 
           // engine.removeEntity(this)
@@ -49,5 +53,9 @@ export class PacManGameEntityDot extends Entity {
     )
 
     engine.addEntity(this)
+  }
+
+  hide() {
+    engine.removeEntity(this)
   }
 }

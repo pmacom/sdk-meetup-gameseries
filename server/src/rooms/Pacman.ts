@@ -25,7 +25,10 @@ export class PacManGame extends Room<PacmanState> {
 
   setUp() {
     // console.log(level)
-    
+    this.state.walls = new ArraySchema<Wall>()
+    this.state.floor = new ArraySchema<Floor>()
+    this.state.pellets = new ArraySchema<Pellet>()
+    this.state.powerPellets = new ArraySchema<Pellet>()
   }
 
   onJoin (client: Client, options: any) {
@@ -35,11 +38,6 @@ export class PacManGame extends Room<PacmanState> {
 
     this.state.players.set(client.sessionId, newPlayer);
     const { walls, floor, pellets, powerPellets } = level
-
-    this.state.walls = new ArraySchema<Wall>()
-    this.state.floor = new ArraySchema<Floor>()
-    this.state.pellets = new ArraySchema<Pellet>()
-    this.state.powerPellets = new ArraySchema<Pellet>()
 
     walls.forEach(wall => this.state.walls.push(new Wall(wall)))
     floor.forEach(f => this.state.floor.push(new Floor(f)))
@@ -66,7 +64,15 @@ export class PacManGame extends Room<PacmanState> {
     })
 
     this.onMessage('gobble', (client: Client, pelletData: any) => {
-      console.log('GOBBLE', pelletData)
+      const pellets = this.state.pellets
+      const { pelletId } = pelletData
+      const pellet = pellets.toArray()[pelletId]
+
+      if(pellet){
+        pellet.visible = false
+        // pellets.at(pelletId).visible = false
+        // console.log('GOBBLE!!!!', pelletData)
+      }
     })
     
 
