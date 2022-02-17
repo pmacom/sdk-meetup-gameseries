@@ -1,7 +1,7 @@
 import { PacmanPixelRatio } from "../constants"
 
 const wallMaterial = new Material()
-wallMaterial.albedoColor = new Color4(1,0,0,.5)
+wallMaterial.albedoColor = new Color4(0,0,1,1)
 const topMaterial = new Material()
 topMaterial.albedoColor = Color3.Black()
 
@@ -19,19 +19,19 @@ export class PacManGameEntityWall extends Entity {
         (location.y*PacmanPixelRatio) + (PacmanPixelRatio/2),
       ),
       rotation: new Quaternion().setEuler(0, 0, 0),
-      scale: new Vector3().setAll(PacmanPixelRatio)
+      scale: new Vector3().set(PacmanPixelRatio, 2, PacmanPixelRatio)
     }))
     this.addComponent(wallMaterial)
 
     
 
-    this.topBox.addComponent(this.topBoxShape)
-    this.topBox.addComponent(new Transform({
-      position: new Vector3(0, .52, 0),
-      scale: new Vector3(1, .05, 1)
-    }))
-    this.topBox.addComponent(topMaterial)
-    this.topBox.setParent(this)
+    // this.topBox.addComponent(this.topBoxShape)
+    // this.topBox.addComponent(new Transform({
+    //   position: new Vector3(0, .52, 0),
+    //   scale: new Vector3(1, .05, 1)
+    // }))
+    // this.topBox.addComponent(topMaterial)
+    // this.topBox.setParent(this)
     engine.addEntity(this)
   }
 }

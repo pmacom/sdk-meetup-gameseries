@@ -1,1 +1,1 @@
-export const PacmanPixelRatio = 32/21
+export const PacmanPixelRatio = 16/21

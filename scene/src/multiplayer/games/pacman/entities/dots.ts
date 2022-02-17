@@ -5,8 +5,10 @@ import { SOUND_PACMAN_CHOMP } from "../sounds"
 import { Wait } from "./wait"
 import { serverRoomSettings } from "src/multiplayer/gameplay"
 
-const scale = .25
+const scale = .3
 let dotCount = 0
+
+const myTexture = new Texture("images/pellet.png")
 
 export class PacManGameEntityDot extends Entity {
   private shape: SphereShape = new SphereShape()
@@ -17,11 +19,17 @@ export class PacManGameEntityDot extends Entity {
     super()
     this.id = dotCount++
 
-    this.addComponent(this.shape)
+    const planeShape = new PlaneShape()
+    const myMaterial = new BasicMaterial()
+    myMaterial.texture = myTexture
+
+    this.addComponent(planeShape)
+    this.addComponent(myMaterial)
+    this.addComponent(new Billboard())
     this.addComponent(new Transform({
       position: new Vector3(
         (location.x*PacmanPixelRatio) + (PacmanPixelRatio/2),
-        PacmanPixelRatio/2,
+        PacmanPixelRatio+.5,
         (location.y*PacmanPixelRatio) + (PacmanPixelRatio/2),
       ),
       rotation: new Quaternion().setEuler(0, 0, 0),
