@@ -12,9 +12,9 @@
   "owner": "",
   "scene": {
     "parcels": [
-      "0,0"
+      "21,-68"
     ],
-    "base": "0,0"
+    "base": "21,-68"
   },
   "requiredPermissions": [],
   "main": "bin/game.js",
@@ -24,14 +24,14 @@
       "name": "spawn1",
       "default": true,
       "position": {
-        "x": 0,
-        "y": 0,
-        "z": 0
+        "x": 7.24,
+        "y": 0.88,
+        "z": 15.74
       },
       "cameraTarget": {
-        "x": 8,
-        "y": 1,
-        "z": 8
+        "x": 7.56,
+        "y": 2.76,
+        "z": 8.22
       }
     }
   ],

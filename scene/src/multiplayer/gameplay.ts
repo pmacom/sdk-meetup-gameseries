@@ -91,10 +91,10 @@ export const GameStart = () => {
         const { x, y } = p
         const pellet = new PacManGameEntityDot(new Vector2(x, y))
         p.onChange = (changes: any) => {
-          log('pellet change')
+          // log('pellet change')
           changes.forEach((change: any) => {
             const { field, value } = change
-            log({ field, value })
+            // log({ field, value })
             switch(field){
               case 'visible':
                 if(!value){ pellet.hide() }

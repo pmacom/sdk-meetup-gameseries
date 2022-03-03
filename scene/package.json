@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "My new Decentraland project",
   "scripts": {
+    "preinstall": "npx npm-force-resolutions",
     "start": "dcl start",
     "build": "build-ecs",
     "watch": "build-ecs --watch",
@@ -23,9 +24,7 @@
     "@dcl/ecs-scene-utils",
     "@dcl/ui-scene-utils"
   ],
-  "bundleDependencies": [
-    "@dcl/ecs-scene-utils",
-    "@dcl/ui-scene-utils",
-    "colyseus.js"
-  ]
+  "resolutions": {
+    "typescript": "~4.4.2"
+  }
 }
